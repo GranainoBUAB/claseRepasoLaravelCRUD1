@@ -32,6 +32,15 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description
+        ]);
+
+        $product->save();
+        return response()->json($product, 200);
+
     }
 
     /**
@@ -64,5 +73,8 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         //
+        $product = Product::find($id);
+        $product->delete();
+
     }
 }
