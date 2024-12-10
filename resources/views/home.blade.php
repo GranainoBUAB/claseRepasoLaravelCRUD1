@@ -12,6 +12,7 @@
                 <th scope="col">Description</th>
                 <th scope="col">Created</th>
                 <th scope="col">Updated</th>
+                <th scope="col">Estado de seguimiento</th>
               </tr>
             </thead>
             <tbody>
@@ -23,6 +24,15 @@
                     <td>{{$product->description}}</td>
                     <td>{{$product->created_at}}</td>
                     <td>{{$product->updated_at}}</td>
+                    <td>
+                        <ul>
+                            @forelse ($product->follows as  $follow)
+                                <li>{{$follow->news}}</li>
+                            @empty
+                                <li>⚠️Aun no hay seguimiento⚠️</li>
+                            @endforelse
+                        </ul>
+                    </td>
                 </tr>
               @endforeach
             </tbody>

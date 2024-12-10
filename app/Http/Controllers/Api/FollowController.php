@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ProductController extends Controller
+class FollowController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,10 +14,6 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::with('follows')->get();
-
-        return view('home', compact('products'));
-
     }
 
     /**
@@ -30,9 +27,35 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $productId)
     {
         //
+        $validated = $request->validate([
+                'news' => 'required|array'
+        ]);
+
+        $product = Product::find($productId);
+
+        if (!$product){
+            return response()->json([
+                'message' => 'Product not found'
+            ], 404);
+        }
+
+        $followsData = collect($validated['news'])->map(function ($newsItem) use ($product){
+            return [
+                'product_id' => $product->id,
+                'news' => $newsItem,
+            ];
+        });
+
+        $product->follows()->createMany($followsData);
+
+        return response()->json([
+            'message' => 'Success add news',
+            'product' => $product->load('follows'),
+            ]);
+
     }
 
     /**

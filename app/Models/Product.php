@@ -15,4 +15,8 @@ class Product extends Model
         'price',
         'description',
     ];
+
+    public function follows(){
+            return $this->hasMany(Follow::class);
+    }
 }

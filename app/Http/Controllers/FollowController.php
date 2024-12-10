@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Follow;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class FollowController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,10 +13,6 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $products = Product::with('follows')->get();
-
-        return view('home', compact('products'));
-
     }
 
     /**
@@ -38,7 +34,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Follow $follow)
     {
         //
     }
@@ -46,7 +42,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Follow $follow)
     {
         //
     }
@@ -54,7 +50,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Follow $follow)
     {
         //
     }
@@ -62,7 +58,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Follow $follow)
     {
         //
     }
